@@ -34,6 +34,21 @@
 								"value": "congratulations",
 								"meta": {}
 							}
+						},
+						"ssl-defaults": {
+							"value": {
+								"id": "ssl-defaults",
+								"name": "SSL Defaults",
+								"description": "Default SSL values for newly created Proxy Hosts",
+								"value": "defaults",
+								"meta": {
+									"certificate_id": 0,
+									"ssl_forced": false,
+									"http2_support": false,
+									"hsts_enabled": false,
+									"hsts_subdomains": false
+								}
+							}
 						}
 					},
 					"schema": {

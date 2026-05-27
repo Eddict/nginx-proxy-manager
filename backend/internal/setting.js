@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import errs from "../lib/error.js";
 import settingModel from "../models/setting.js";
+import internalHost from "./host.js";
 import internalNginx from "./nginx.js";
 
 const internalSetting = {
@@ -22,6 +23,19 @@ const internalSetting = {
 					throw new errs.InternalValidationError(
 						`Setting could not be updated, IDs do not match: ${row.id} !== ${data.id}`,
 					);
+				}
+
+				if (row.id === "ssl-defaults") {
+					const existingMeta = row.meta || {};
+					const incomingMeta = data.meta || {};
+					const cleanMeta = internalHost.cleanSslHstsData(incomingMeta, existingMeta);
+					data.meta = {
+						certificate_id: Number(cleanMeta.certificate_id) || 0,
+						ssl_forced: !!cleanMeta.ssl_forced,
+						http2_support: !!cleanMeta.http2_support,
+						hsts_enabled: !!cleanMeta.hsts_enabled,
+						hsts_subdomains: !!cleanMeta.hsts_subdomains,
+					};
 				}
 
 				return settingModel.query().where({ id: data.id }).patch(data);
