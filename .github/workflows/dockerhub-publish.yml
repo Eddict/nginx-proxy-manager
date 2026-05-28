@@ -7,7 +7,7 @@ on:
       - 'v*'
 
 env:
-  IMAGE_NAME: eddictnl/nginx-proxy-manager
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/nginx-proxy-manager
 
 jobs:
   docker:
