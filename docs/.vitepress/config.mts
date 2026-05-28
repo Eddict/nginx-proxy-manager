@@ -92,7 +92,7 @@ export default defineConfig({
 		socialLinks: [
 			{
 				icon: "github",
-				link: "https://github.com/NginxProxyManager/nginx-proxy-manager",
+				link: "https://github.com/Eddict/nginx-proxy-manager",
 			},
 		],
 		search: {

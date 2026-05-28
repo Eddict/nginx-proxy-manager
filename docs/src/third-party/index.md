@@ -19,4 +19,4 @@ Known integrations:
 
 
 If you would like your integration of NPM listed, please open a
-[Github issue](https://github.com/NginxProxyManager/nginx-proxy-manager/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=)
+[Github issue](https://github.com/Eddict/nginx-proxy-manager/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=)
