@@ -41,7 +41,7 @@ export default function Layout() {
 										setActiveTab("ssl-defaults");
 									}}
 								>
-									<T id="column.ssl" /> defaults
+									<T id="settings.ssl-defaults" />
 								</a>
 							</div>
 						</div>

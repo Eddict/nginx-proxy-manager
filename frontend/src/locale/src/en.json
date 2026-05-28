@@ -680,6 +680,9 @@
 	"settings.default-site.redirect": {
 		"defaultMessage": "Redirect"
 	},
+	"settings.ssl-defaults": {
+		"defaultMessage": "SSL Defaults"
+	},
 	"setup.preamble": {
 		"defaultMessage": "Get started by creating your admin account."
 	},
