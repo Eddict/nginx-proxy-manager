@@ -1,9 +1,9 @@
 <p align="center">
 	<img src="https://nginxproxymanager.com/github.png">
 	<br><br>
-	<img src="https://img.shields.io/badge/version-2.15.0-green.svg?style=for-the-badge">
-	<a href="https://hub.docker.com/repository/docker/eddictnl/nginx-proxy-manager">
-		<img src="https://img.shields.io/docker/stars/eddictnl/nginx-proxy-manager.svg?style=for-the-badge">
+	<img src="https://img.shields.io/badge/version-2.15.1-green.svg?style=for-the-badge">
+	<a href="https://hub.docker.com/repository/docker/jc21/nginx-proxy-manager">
+		<img src="https://img.shields.io/docker/stars/jc21/nginx-proxy-manager.svg?style=for-the-badge">
 	</a>
 	<a href="https://hub.docker.com/repository/docker/eddictnl/nginx-proxy-manager">
 		<img src="https://img.shields.io/docker/pulls/eddictnl/nginx-proxy-manager.svg?style=for-the-badge">
