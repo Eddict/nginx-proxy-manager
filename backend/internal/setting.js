@@ -40,7 +40,8 @@ const internalSetting = {
 				if (row.id === "proxy-hosts-options-defaults") {
 					const incomingMeta = data.meta || {};
 					data.meta = {
-						caching_enabled: !!incomingMeta.caching_enabled,
+						caching_enabled:
+							typeof incomingMeta.caching_enabled === "boolean" ? incomingMeta.caching_enabled : false,
 						block_exploits:
 							typeof incomingMeta.block_exploits === "boolean" ? incomingMeta.block_exploits : true,
 						allow_websocket_upgrade:

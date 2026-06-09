@@ -95,7 +95,7 @@ export default function ProxyHostsOptionsDefaults() {
 									<span className="col-auto">
 										<Field name="cachingEnabled" type="checkbox">
 											{({ field }: FieldProps<boolean>) => {
-												const { value, ...restField } = field;
+												const { value: _value, ...restField } = field;
 												return (
 													<label className="form-check form-check-single form-switch">
 														<input
@@ -121,7 +121,7 @@ export default function ProxyHostsOptionsDefaults() {
 									<span className="col-auto">
 										<Field name="blockExploits" type="checkbox">
 											{({ field }: FieldProps<boolean>) => {
-												const { value, ...restField } = field;
+												const { value: _value, ...restField } = field;
 												return (
 													<label className="form-check form-check-single form-switch">
 														<input
@@ -147,7 +147,7 @@ export default function ProxyHostsOptionsDefaults() {
 									<span className="col-auto">
 										<Field name="allowWebsocketUpgrade" type="checkbox">
 											{({ field }: FieldProps<boolean>) => {
-												const { value, ...restField } = field;
+												const { value: _value, ...restField } = field;
 												return (
 													<label className="form-check form-check-single form-switch">
 														<input
