@@ -6,7 +6,7 @@
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite",
-		"build": "yarn locale-compile && tsc && vite build",
+		"build": "formatjs compile-folder src/locale/src src/locale/lang && tsc && vite build",
 		"lint": "biome lint",
 		"preview": "vite preview",
 		"prettier": "biome format --write ./src",
