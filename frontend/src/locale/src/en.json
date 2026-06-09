@@ -680,6 +680,9 @@
 	"settings.default-site.redirect": {
 		"defaultMessage": "Redirect"
 	},
+	"settings.proxy-hosts-options-defaults": {
+		"defaultMessage": "Proxy Hosts Options defaults"
+	},
 	"settings.ssl-defaults": {
 		"defaultMessage": "SSL Defaults"
 	},
