@@ -1,8 +1,12 @@
 import https from "node:https";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { ProxyAgent } from "proxy-agent";
 import { debug, remoteVersion as logger } from "../logger.js";
 import pjson from "../package.json" with { type: "json" };
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const VERSION_URL = "https://api.github.com/repos/Eddict/nginx-proxy-manager/releases/latest";
 
 const internalRemoteVersion = {
@@ -29,8 +33,21 @@ const internalRemoteVersion = {
 		}
 
 		const latestVersion = internalRemoteVersion.last_result.tag_name;
-		const version = pjson.version.split("-").shift().split(".");
-		const currentVersion = `v${version[0]}.${version[1]}.${version[2]}`;
+		
+		// Try to read version from .version file first, fallback to package.json
+		let currentVersion = pjson.version;
+		try {
+			const versionFilePath = path.join(__dirname, "../../.version");
+			const versionFromFile = fs.readFileSync(versionFilePath, "utf-8").trim();
+			if (versionFromFile) {
+				currentVersion = versionFromFile.startsWith("v") ? versionFromFile : `v${versionFromFile}`;
+			}
+		} catch (err) {
+			debug(logger, `.version file not found, using package.json version: ${pjson.version}`);
+			const version = pjson.version.split("-").shift().split(".");
+			currentVersion = `v${version[0]}.${version[1]}.${version[2]}`;
+		}
+		
 		return {
 			current: currentVersion,
 			latest: latestVersion,
