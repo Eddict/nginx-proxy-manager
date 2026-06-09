@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, type FieldProps, type FormikHelpers } from "formik";
 import { type ReactNode, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { Button, Loading } from "src/components";
@@ -11,13 +11,15 @@ import {
 } from "src/modules/ProxyHostsOptionsDefaults";
 import { showObjectSuccess } from "src/notifications";
 
+type FormValues = typeof DEFAULT_PROXY_HOSTS_OPTIONS_DEFAULTS;
+
 export default function ProxyHostsOptionsDefaults() {
 	const { data, isLoading, error } = useSetting("proxy-hosts-options-defaults");
 	const { mutate: setSetting } = useSetSetting();
 	const [errorMsg, setErrorMsg] = useState<ReactNode | null>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const onSubmit = async (values: any, { setSubmitting }: any) => {
+	const onSubmit = async (values: FormValues, { setSubmitting }: FormikHelpers<FormValues>) => {
 		if (isSubmitting) return;
 		setIsSubmitting(true);
 		setErrorMsg(null);
@@ -33,7 +35,7 @@ export default function ProxyHostsOptionsDefaults() {
 				},
 			},
 			{
-				onError: (err: any) => setErrorMsg(<T id={err.message} />),
+				onError: (err: Error) => setErrorMsg(<T id={err.message} />),
 				onSuccess: () => {
 					showObjectSuccess("setting", "saved");
 				},
@@ -92,18 +94,21 @@ export default function ProxyHostsOptionsDefaults() {
 									</span>
 									<span className="col-auto">
 										<Field name="cachingEnabled" type="checkbox">
-											{({ field }: any) => (
-												<label className="form-check form-check-single form-switch">
-													<input
-														{...field}
-														id="cachingEnabled"
-														className={cn("form-check-input", {
-															"bg-teal": field.checked,
-														})}
-														type="checkbox"
-													/>
-												</label>
-											)}
+											{({ field }: FieldProps<boolean>) => {
+												const { value, ...restField } = field;
+												return (
+													<label className="form-check form-check-single form-switch">
+														<input
+															{...restField}
+															id="cachingEnabled"
+															className={cn("form-check-input", {
+																"bg-teal": field.checked,
+															})}
+															type="checkbox"
+														/>
+													</label>
+												);
+											}}
 										</Field>
 									</span>
 								</label>
@@ -115,18 +120,21 @@ export default function ProxyHostsOptionsDefaults() {
 									</span>
 									<span className="col-auto">
 										<Field name="blockExploits" type="checkbox">
-											{({ field }: any) => (
-												<label className="form-check form-check-single form-switch">
-													<input
-														{...field}
-														id="blockExploits"
-														className={cn("form-check-input", {
-															"bg-teal": field.checked,
-														})}
-														type="checkbox"
-													/>
-												</label>
-											)}
+											{({ field }: FieldProps<boolean>) => {
+												const { value, ...restField } = field;
+												return (
+													<label className="form-check form-check-single form-switch">
+														<input
+															{...restField}
+															id="blockExploits"
+															className={cn("form-check-input", {
+																"bg-teal": field.checked,
+															})}
+															type="checkbox"
+														/>
+													</label>
+												);
+											}}
 										</Field>
 									</span>
 								</label>
@@ -138,18 +146,21 @@ export default function ProxyHostsOptionsDefaults() {
 									</span>
 									<span className="col-auto">
 										<Field name="allowWebsocketUpgrade" type="checkbox">
-											{({ field }: any) => (
-												<label className="form-check form-check-single form-switch">
-													<input
-														{...field}
-														id="allowWebsocketUpgrade"
-														className={cn("form-check-input", {
-															"bg-teal": field.checked,
-														})}
-														type="checkbox"
-													/>
-												</label>
-											)}
+											{({ field }: FieldProps<boolean>) => {
+												const { value, ...restField } = field;
+												return (
+													<label className="form-check form-check-single form-switch">
+														<input
+															{...restField}
+															id="allowWebsocketUpgrade"
+															className={cn("form-check-input", {
+																"bg-teal": field.checked,
+															})}
+															type="checkbox"
+														/>
+													</label>
+												);
+											}}
 										</Field>
 									</span>
 								</label>
