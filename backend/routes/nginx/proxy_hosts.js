@@ -251,7 +251,7 @@ router
 			const logFile = `/data/logs/proxy-host-${hostId}_${logType}.log`;
 
 			// Check access permission
-			await res.locals.access.can("proxy_hosts:get", hostId);
+			await internalProxyHost.get(res.locals.access, { id: hostId });
 
 			let logs = "";
 			if (fs.existsSync(logFile)) {
