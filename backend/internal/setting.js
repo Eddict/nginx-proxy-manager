@@ -37,6 +37,19 @@ const internalSetting = {
 						hsts_subdomains: !!cleanMeta.hsts_subdomains,
 					};
 				}
+				if (row.id === "proxy-hosts-options-defaults") {
+					const incomingMeta = data.meta || {};
+					data.meta = {
+						caching_enabled:
+							typeof incomingMeta.caching_enabled === "boolean" ? incomingMeta.caching_enabled : false,
+						block_exploits:
+							typeof incomingMeta.block_exploits === "boolean" ? incomingMeta.block_exploits : true,
+						allow_websocket_upgrade:
+							typeof incomingMeta.allow_websocket_upgrade === "boolean"
+								? incomingMeta.allow_websocket_upgrade
+								: true,
+					};
+				}
 
 				return settingModel.query().where({ id: data.id }).patch(data);
 			})

@@ -49,6 +49,19 @@
 									"hsts_subdomains": false
 								}
 							}
+						},
+						"proxy-hosts-options-defaults": {
+							"value": {
+								"id": "proxy-hosts-options-defaults",
+								"name": "Proxy Hosts Options defaults",
+								"description": "Default option values for newly created Proxy Hosts",
+								"value": "defaults",
+								"meta": {
+									"caching_enabled": false,
+									"block_exploits": true,
+									"allow_websocket_upgrade": true
+								}
+							}
 						}
 					},
 					"schema": {

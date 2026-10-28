@@ -14,7 +14,7 @@
 			"schema": {
 				"type": "string",
 				"minLength": 1,
-				"enum": ["default-site", "ssl-defaults"]
+				"enum": ["default-site", "ssl-defaults", "proxy-hosts-options-defaults"]
 			},
 			"required": true,
 			"description": "Setting ID",
@@ -91,6 +91,37 @@
 										"hsts_subdomains": {
 											"type": "boolean",
 											"example": false
+										}
+									}
+								}
+							}
+						},
+						{
+							"type": "object",
+							"additionalProperties": false,
+							"required": ["value", "meta"],
+							"properties": {
+								"value": {
+									"type": "string",
+									"minLength": 1,
+									"enum": ["defaults"],
+									"example": "defaults"
+								},
+								"meta": {
+									"type": "object",
+									"additionalProperties": false,
+									"properties": {
+										"caching_enabled": {
+											"type": "boolean",
+											"example": false
+										},
+										"block_exploits": {
+											"type": "boolean",
+											"example": true
+										},
+										"allow_websocket_upgrade": {
+											"type": "boolean",
+											"example": true
 										}
 									}
 								}

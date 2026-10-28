@@ -99,6 +99,17 @@ const setupDefaultSettings = async () => {
 				hsts_subdomains: false,
 			},
 		},
+		{
+			id: "proxy-hosts-options-defaults",
+			name: "Proxy Hosts Options defaults",
+			description: "Default option values for newly created Proxy Hosts",
+			value: "defaults",
+			meta: {
+				caching_enabled: false,
+				block_exploits: true,
+				allow_websocket_upgrade: true,
+			},
+		},
 	];
 
 	let added = false;

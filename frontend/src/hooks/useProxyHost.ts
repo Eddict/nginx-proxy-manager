@@ -1,15 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createProxyHost, getProxyHost, getSetting, type ProxyHost, updateProxyHost } from "src/api/backend";
+import {
+	DEFAULT_PROXY_HOSTS_OPTIONS_DEFAULTS,
+	normalizeProxyHostsOptionsDefaults,
+} from "src/modules/ProxyHostsOptionsDefaults";
 import { DEFAULT_SSL_DEFAULTS, normalizeSslDefaults } from "src/modules/SslDefaults";
 
 const fetchProxyHost = async (id: number | "new") => {
 	if (id === "new") {
 		let sslDefaults = DEFAULT_SSL_DEFAULTS;
+		let proxyHostsOptionsDefaults = DEFAULT_PROXY_HOSTS_OPTIONS_DEFAULTS;
 		try {
 			const setting = await getSetting("ssl-defaults");
 			sslDefaults = normalizeSslDefaults(setting?.meta);
 		} catch (_) {
 			sslDefaults = DEFAULT_SSL_DEFAULTS;
+		}
+		try {
+			const setting = await getSetting("proxy-hosts-options-defaults");
+			proxyHostsOptionsDefaults = normalizeProxyHostsOptionsDefaults(setting?.meta);
+		} catch (_) {
+			proxyHostsOptionsDefaults = DEFAULT_PROXY_HOSTS_OPTIONS_DEFAULTS;
 		}
 
 		return {
@@ -23,11 +34,11 @@ const fetchProxyHost = async (id: number | "new") => {
 			accessListId: 0,
 			certificateId: sslDefaults.certificateId,
 			sslForced: sslDefaults.sslForced,
-			cachingEnabled: false,
-			blockExploits: false,
+			cachingEnabled: proxyHostsOptionsDefaults.cachingEnabled,
+			blockExploits: proxyHostsOptionsDefaults.blockExploits,
 			advancedConfig: "",
 			meta: {},
-			allowWebsocketUpgrade: false,
+			allowWebsocketUpgrade: proxyHostsOptionsDefaults.allowWebsocketUpgrade,
 			http2Support: sslDefaults.http2Support,
 			forwardScheme: "",
 			enabled: true,
