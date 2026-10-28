@@ -42,7 +42,7 @@ const getFileStream = () => {
 
 	try {
 		fs.mkdirSync(path.dirname(LOG_FILE), { recursive: true });
-		const stream = fs.createWriteStream(LOG_FILE, { flags: "a" });
+		const stream = fs.createWriteStream(LOG_FILE, { flags: "a", mode: 0o600 });
 		stream.on("error", () => {
 			fileStream = null;
 		});
