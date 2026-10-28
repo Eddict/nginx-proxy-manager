@@ -6,12 +6,12 @@ import certificateModel from "./models/certificate.js";
 import settingModel from "./models/setting.js";
 import userModel from "./models/user.js";
 import userPermissionModel from "./models/user_permission.js";
-import fs from "fs/promises";
+import fs from "node:fs/promises";
 
 export const isSetup = async () => {
 	const row = await userModel.query().select("id").where("is_deleted", 0).first();
 	return row?.id > 0;
-}
+};
 
 /**
  * Creates a default admin users if one doesn't already exist in the database
@@ -34,7 +34,7 @@ const setupDefaultUser = async () => {
 	const userIsetup = await isSetup();
 	if (!userIsetup) {
 		// Create a new user and set password
-		logger.info(`Creating a new user: ${initialAdminEmail} with password: ${initialAdminPassword}`);
+		logger.info(`Creating a new user: ${initialAdminEmail}`);
 
 		const data = {
 			is_deleted: 0,
@@ -45,18 +45,14 @@ const setupDefaultUser = async () => {
 			roles: ["admin"],
 		};
 
-		const user = await userModel
-			.query()
-			.insertAndFetch(data);
+		const user = await userModel.query().insertAndFetch(data);
 
-		await authModel
-			.query()
-			.insert({
-				user_id: user.id,
-				type: "password",
-				secret: initialAdminPassword,
-				meta: {},
-			});
+		await authModel.query().insert({
+			user_id: user.id,
+			type: "password",
+			secret: initialAdminPassword,
+			meta: {},
+		});
 
 		await userPermissionModel.query().insert({
 			user_id: user.id,
@@ -131,14 +127,10 @@ const setupDefaultSettings = async () => {
  * @returns {Promise}
  */
 const setupCertbotPlugins = async () => {
-	const certificates = await certificateModel
-		.query()
-		.where("is_deleted", 0)
-		.andWhere("provider", "letsencrypt");
+	const certificates = await certificateModel.query().where("is_deleted", 0).andWhere("provider", "letsencrypt");
 
 	if (certificates?.length) {
 		const plugins = [];
-		const promises = [];
 
 		certificates.map((certificate) => {
 			if (certificate.meta && certificate.meta.dns_challenge === true) {
@@ -146,21 +138,23 @@ const setupCertbotPlugins = async () => {
 					plugins.push(certificate.meta.dns_provider);
 				}
 
-				// Make sure credentials file exists
-				const credentials_loc = `/etc/letsencrypt/credentials/credentials-${certificate.id}`;
-				if (typeof certificate.meta.dns_provider_credentials === "string") {
-					promises.push(fs.mkdir("/etc/letsencrypt/credentials", { recursive: true })
-								  .then(() => fs.writeFile(credentials_loc, certificate.meta.dns_provider_credentials, { mode: 0o600, flag: "wx" }))
-								  .catch((err) => { if (err.code !== "EEXIST") throw err; }));
-				}
+				// Deliberately does NOT write the DNS credentials file here any more.
+				//
+				// It used to, so that a later `certbot renew` would find the path recorded in its
+				// renewal config. The effect was that every backend restart rewrote a plaintext
+				// DNS provider API token for every DNS-01 certificate, and left it there.
+				//
+				// internalCertificate now writes that file immediately before it runs certbot and
+				// removes it again afterwards, so there is exactly one writer and the credential
+				// is on disk only for the length of a certbot run. Recreating the files at boot
+				// would put every one of them straight back.
 			}
 			return true;
 		});
-		
+
 		await installPlugins(plugins);
 
-		if (promises.length) {
-			await Promise.all(promises);
+		if (plugins.length) {
 			logger.info(`Added Certbot plugins ${plugins.join(", ")}`);
 		}
 	}

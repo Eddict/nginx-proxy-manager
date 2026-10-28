@@ -7,8 +7,8 @@ Older versions are not actively maintained.
 
 | Version | Supported |
 | ------- | --------- |
-| 2.15.x (latest) | :white_check_mark: |
-| < 2.15.0 | :x: |
+| 2.16.x (latest) | :white_check_mark: |
+| < 2.16.0 | :x: |
 
 Docker images: `eddictnl/nginx-proxy-manager:latest`, `eddictnl/nginx-proxy-manager:2`
 
