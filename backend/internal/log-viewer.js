@@ -37,7 +37,7 @@ const MAX_SCAN_BYTES = 5 * 1024 * 1024;
  * @param   {Number} maxLines
  * @returns {Promise<{lines: String[], size: Number, truncated: Boolean}>}
  */
-const readLastLines = async (filePath, maxLines) => {
+export const readLastLines = async (filePath, maxLines) => {
 	let handle;
 	try {
 		handle = await fs.promises.open(filePath, "r");

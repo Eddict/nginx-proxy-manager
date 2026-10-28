@@ -1,5 +1,5 @@
 import express from "express";
-import fs from "node:fs";
+import { readLastLines } from "../../internal/log-viewer.js";
 import internalProxyHost from "../../internal/proxy-host.js";
 import jwtdecode from "../../lib/express/jwt-decode.js";
 import apiValidator from "../../lib/validator/api.js";
@@ -254,15 +254,12 @@ router
 			await internalProxyHost.get(res.locals.access, { id: hostId });
 
 			let logs = "";
-			if (fs.existsSync(logFile)) {
-				const content = fs.readFileSync(logFile, { encoding: "utf8" });
-				const lines = content.split("\n");
-				// Return last 1000 lines to avoid huge payloads
-				const maxLines = 1000;
-				if (lines.length > maxLines) {
-					logs = lines.slice(-maxLines).join("\n");
-				} else {
-					logs = content;
+			try {
+				const result = await readLastLines(logFile, 1000);
+				logs = result.lines.join("\n");
+			} catch (err) {
+				if (err.code !== "ENOENT") {
+					throw err;
 				}
 			}
 
