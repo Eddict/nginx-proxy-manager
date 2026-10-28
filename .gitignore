@@ -12,3 +12,4 @@ docker/dev/resolv.conf
 .claude
 backend/frontend
 yarn.lock
+package-lock.json
