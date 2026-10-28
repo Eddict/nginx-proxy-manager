@@ -1,9 +1,29 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createProxyHost, getProxyHost, type ProxyHost, updateProxyHost } from "src/api/backend";
+import { createProxyHost, getProxyHost, getSetting, type ProxyHost, updateProxyHost } from "src/api/backend";
+import {
+	DEFAULT_PROXY_HOSTS_OPTIONS_DEFAULTS,
+	normalizeProxyHostsOptionsDefaults,
+} from "src/modules/ProxyHostsOptionsDefaults";
+import { DEFAULT_SSL_DEFAULTS, normalizeSslDefaults } from "src/modules/SslDefaults";
 
-const fetchProxyHost = (id: number | "new") => {
+const fetchProxyHost = async (id: number | "new") => {
 	if (id === "new") {
-		return Promise.resolve({
+		let sslDefaults = DEFAULT_SSL_DEFAULTS;
+		let proxyHostsOptionsDefaults = DEFAULT_PROXY_HOSTS_OPTIONS_DEFAULTS;
+		try {
+			const setting = await getSetting("ssl-defaults");
+			sslDefaults = normalizeSslDefaults(setting?.meta);
+		} catch (_) {
+			sslDefaults = DEFAULT_SSL_DEFAULTS;
+		}
+		try {
+			const setting = await getSetting("proxy-hosts-options-defaults");
+			proxyHostsOptionsDefaults = normalizeProxyHostsOptionsDefaults(setting?.meta);
+		} catch (_) {
+			proxyHostsOptionsDefaults = DEFAULT_PROXY_HOSTS_OPTIONS_DEFAULTS;
+		}
+
+		return {
 			id: 0,
 			createdOn: "",
 			modifiedOn: "",
@@ -12,20 +32,20 @@ const fetchProxyHost = (id: number | "new") => {
 			forwardHost: "",
 			forwardPort: 0,
 			accessListId: 0,
-			certificateId: 0,
-			sslForced: false,
-			cachingEnabled: false,
-			blockExploits: false,
+			certificateId: sslDefaults.certificateId,
+			sslForced: sslDefaults.sslForced,
+			cachingEnabled: proxyHostsOptionsDefaults.cachingEnabled,
+			blockExploits: proxyHostsOptionsDefaults.blockExploits,
 			advancedConfig: "",
 			meta: {},
-			allowWebsocketUpgrade: false,
-			http2Support: false,
+			allowWebsocketUpgrade: proxyHostsOptionsDefaults.allowWebsocketUpgrade,
+			http2Support: sslDefaults.http2Support,
 			forwardScheme: "",
 			enabled: true,
-			hstsEnabled: false,
-			hstsSubdomains: false,
+			hstsEnabled: sslDefaults.hstsEnabled,
+			hstsSubdomains: sslDefaults.hstsSubdomains,
 			trustForwardedProto: false,
-		} as ProxyHost);
+		} as ProxyHost;
 	}
 	return getProxyHost(id, ["owner"]);
 };

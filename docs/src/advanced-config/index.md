@@ -14,7 +14,7 @@ on the `data` and `letsencrypt` folders at startup.
 ```yml
 services:
   app:
-    image: 'jc21/nginx-proxy-manager:{{VERSION}}'
+    image: 'eddictnl/nginx-proxy-manager:{{VERSION}}'
     environment:
       PUID: 1000
       PGID: 1000
@@ -101,7 +101,7 @@ secrets:
 
 services:
   app:
-    image: 'jc21/nginx-proxy-manager:{{VERSION}}'
+    image: 'eddictnl/nginx-proxy-manager:{{VERSION}}'
     restart: unless-stopped
     ports:
       # Public HTTP Port:
@@ -216,7 +216,7 @@ You can customise the logrotate configuration through a mount (if your custom co
     - ./logrotate.custom:/etc/logrotate.d/nginx-proxy-manager
 ```
 
-For reference, the default configuration can be found [here](https://github.com/NginxProxyManager/nginx-proxy-manager/blob/develop/docker/rootfs/etc/logrotate.d/nginx-proxy-manager).
+For reference, the default configuration can be found [here](https://github.com/Eddict/nginx-proxy-manager/blob/develop/docker/rootfs/etc/logrotate.d/nginx-proxy-manager).
 
 ## Enabling the geoip2 module
 

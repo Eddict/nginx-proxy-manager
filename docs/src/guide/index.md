@@ -6,11 +6,11 @@ outline: deep
 
 ::: raw
 <p align="center">
-	<a href="https://hub.docker.com/repository/docker/jc21/nginx-proxy-manager" style="display:inline;margin-right:5px;">
-		<img src="https://img.shields.io/docker/stars/jc21/nginx-proxy-manager.svg?style=for-the-badge" style="display:inline;">
+	<a href="https://hub.docker.com/repository/docker/eddictnl/nginx-proxy-manager" style="display:inline;margin-right:5px;">
+		<img src="https://img.shields.io/docker/stars/eddictnl/nginx-proxy-manager.svg?style=for-the-badge" style="display:inline;">
 	</a>
-	<a href="https://hub.docker.com/repository/docker/jc21/nginx-proxy-manager" style="display:inline;margin-right:5px;">
-		<img src="https://img.shields.io/docker/pulls/jc21/nginx-proxy-manager.svg?style=for-the-badge" style="display:inline;">
+	<a href="https://hub.docker.com/repository/docker/eddictnl/nginx-proxy-manager" style="display:inline;margin-right:5px;">
+		<img src="https://img.shields.io/docker/pulls/eddictnl/nginx-proxy-manager.svg?style=for-the-badge" style="display:inline;">
 	</a>
 </p>
 :::
@@ -64,7 +64,7 @@ I won't go in to too much detail here but here are the basics for someone new to
 ```yml
 services:
   app:
-    image: 'jc21/nginx-proxy-manager:{{VERSION}}'
+    image: 'eddictnl/nginx-proxy-manager:{{VERSION}}'
     restart: unless-stopped
     environment:
       TZ: "Australia/Brisbane"
@@ -107,11 +107,11 @@ Documentation within the `develop` branch is available for preview at
 
 ### Contributors
 
-Special thanks to [all of our contributors](https://github.com/NginxProxyManager/nginx-proxy-manager/graphs/contributors).
+Special thanks to [all of our contributors](https://github.com/Eddict/nginx-proxy-manager/graphs/contributors).
 
 
 ## Getting Support
 
-1. [Found a bug?](https://github.com/NginxProxyManager/nginx-proxy-manager/issues)
-2. [Discussions](https://github.com/NginxProxyManager/nginx-proxy-manager/discussions)
+1. [Found a bug?](https://github.com/Eddict/nginx-proxy-manager/issues)
+2. [Discussions](https://github.com/Eddict/nginx-proxy-manager/discussions)
 3. [Reddit](https://reddit.com/r/nginxproxymanager)

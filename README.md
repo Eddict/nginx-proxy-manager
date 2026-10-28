@@ -5,8 +5,8 @@
 	<a href="https://hub.docker.com/repository/docker/jc21/nginx-proxy-manager">
 		<img src="https://img.shields.io/docker/stars/jc21/nginx-proxy-manager.svg?style=for-the-badge">
 	</a>
-	<a href="https://hub.docker.com/repository/docker/jc21/nginx-proxy-manager">
-		<img src="https://img.shields.io/docker/pulls/jc21/nginx-proxy-manager.svg?style=for-the-badge">
+	<a href="https://hub.docker.com/repository/docker/eddictnl/nginx-proxy-manager">
+		<img src="https://img.shields.io/docker/pulls/eddictnl/nginx-proxy-manager.svg?style=for-the-badge">
 	</a>
 </p>
 
@@ -61,7 +61,7 @@ I won't go into too much detail here, but here are the basics for someone new to
 ```yml
 services:
   app:
-    image: 'docker.io/jc21/nginx-proxy-manager:latest'
+    image: 'docker.io/eddictnl/nginx-proxy-manager:latest'
     restart: unless-stopped
     ports:
       - '80:80'

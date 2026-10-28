@@ -74,16 +74,49 @@ const setupDefaultUser = async () => {
  * @returns {Promise}
  */
 const setupDefaultSettings = async () => {
-	const row = await settingModel.query().select("id").where({ id: "default-site" }).first();
-
-	if (!row?.id) {
-		await settingModel.query().insert({
+	const defaultSettings = [
+		{
 			id: "default-site",
 			name: "Default Site",
 			description: "What to show when Nginx is hit with an unknown Host",
 			value: "congratulations",
 			meta: {},
-		});
+		},
+		{
+			id: "ssl-defaults",
+			name: "SSL Defaults",
+			description: "Default SSL values for newly created Proxy Hosts",
+			value: "defaults",
+			meta: {
+				certificate_id: 0,
+				ssl_forced: false,
+				http2_support: false,
+				hsts_enabled: false,
+				hsts_subdomains: false,
+			},
+		},
+		{
+			id: "proxy-hosts-options-defaults",
+			name: "Proxy Hosts Options defaults",
+			description: "Default option values for newly created Proxy Hosts",
+			value: "defaults",
+			meta: {
+				caching_enabled: false,
+				block_exploits: true,
+				allow_websocket_upgrade: true,
+			},
+		},
+	];
+
+	let added = false;
+	for (const setting of defaultSettings) {
+		const row = await settingModel.query().select("id").where({ id: setting.id }).first();
+		if (!row?.id) {
+			await settingModel.query().insert(setting);
+			added = true;
+		}
+	}
+	if (added) {
 		logger.info("Default settings added");
 	}
 };
