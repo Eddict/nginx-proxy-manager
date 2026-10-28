@@ -54,6 +54,16 @@ describe('Users endpoints', () => {
 				expect(data.error.code).to.equal(401);
 			});
 
+			cy.task('backendApiGet', {
+				token:         token,
+				path:          '/api/tokens',
+				returnOnError: true
+			}).then((data) => {
+				expect(data).to.have.property('error');
+				expect(data.error).to.have.property('code');
+				expect(data.error.code).to.equal(401);
+			});
+
 			// Put the password back, the rest of the suite shares this user, and take a
 			// token minted after the change: restoring it invalidates the one that made it.
 			cy.getToken(null, {secret: 'changeme2'}).then((tempToken) => {

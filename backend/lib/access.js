@@ -220,7 +220,8 @@ export default function (tokenString) {
 		 */
 		load: async (allowInternal) => {
 			if (tokenString) {
-				return await Token.load(tokenString);
+				await this.init();
+				return tokenData;
 			}
 			allowInternalAccess = allowInternal;
 			return allowInternal || null;
